@@ -27,7 +27,7 @@ function getRandomColor(x) {
 };
 
 function setup(){
-    var n = 1
+    var n = 0
     createCanvas(401, 401);
     colorMode(RGB)
         for (var i = 0; i < 8; i++){
@@ -54,13 +54,13 @@ function mousePressed(){
     }
 }
 
-function getNeighbor(n){
-    var neighbors = [];
+function getNeighbors(n){
     var N = squarks[n-1];
     var E = squarks[n+8];
     var S = squarks[n+1];
     var W = squarks[n-8];
-    return [N, S, E, W];
+    var neighbors = [N, E, S, W];
+    return neighbors;
 }
 
 function Squark(x, y, n){
@@ -76,9 +76,42 @@ function Squark(x, y, n){
 
     this.clickedOn = function() {
         if(mouseX > this.x && mouseX < this.x + 50 && mouseY > this.y && mouseY < this.y + 50){
-            this.color = getRandomColor(this.color);
-            console.log(this);
-            console.log(getNeighbor(this.index));
+
+            newColor = [0, 0, 0];
+
+            if (this.color == a){
+                var newColor = b;
+            }
+
+            if (this.color == b){
+                var newColor = c;
+            }
+
+            if (this.color == c){
+                var newColor = d;
+            }
+
+            if (this.color == d){
+                var newColor = e;
+            }
+
+            if (this.color == e){
+                var newColor = a;
+            }
+
+            var neighbors = getNeighbors(this.index);
+
+            var N = neighbors[0];
+            var E = neighbors[1];
+            var S = neighbors[2];
+            var W = neighbors[3];
+
+            N.color = newColor;
+            E.color = newColor;
+            S.color = newColor;
+            W.color = newColor;
+
+            console.log(this.index)
         }
     }
 }
