@@ -5,17 +5,21 @@ var colors = [];
 
 function setup(){
     createCanvas(401, 401);
-    for (var i = 0; i<cols; i++){
+    colorMode(RGB)
+    for (var i = 0; i < cols; i++){
         colors[i] = []
-        for (var j = 0; j<rows; j++){
+        for (var j = 0; j < rows; j++){
             colors[i][j] = floor(random(255));
         }
     }
 }
 
-function mousPressed(){
-    for (var i = 0; i < colors.length; i ++){
-        console.log(colors.length)
+function mousePressed(){
+    for (var i = 0; i < cols; i++){
+        colors[i] = []
+        for (var j = 0; j < rows; j++){
+            colors[i][j] = floor(random(255));
+        }
     }
 }
 
