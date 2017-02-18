@@ -111,6 +111,8 @@ function Squark(x, y, n){
             S.color = newColor;
             W.color = newColor;
 
+            this.color = newColor;
+
             console.log(this.index)
         }
     }
