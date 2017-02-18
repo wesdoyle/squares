@@ -13,22 +13,29 @@ var e = [42, 54, 59]
 /* Array representing available colors */
 var availableColors = [a, b, c, d, e]
 
-/* Get a random color from colors */
-function getRandomColor() {
-        return availableColors[Math.floor(Math.random() * availableColors.length)];
-};
-
 colors = [];
 position = [];
 
+/* Get a random color from colors */
+function getRandomColor(x) {
+        var newColor = availableColors[Math.floor(Math.random()
+                * availableColors.length)];
+        if (newColor == x) {
+            getRandomColor(x);
+        }
+        return newColor;
+};
+
 function setup(){
+    var n = 1
     createCanvas(401, 401);
     colorMode(RGB)
         for (var i = 0; i < 8; i++){
             for (var j = 0; j < 8; j++){
                 var x = i*50;
                 var y = j*50;
-                squarks.push(new Squark(x, y));
+                squarks.push(new Squark(x, y, n));
+                n = n + 1;
             }
         }
 }
@@ -47,7 +54,17 @@ function mousePressed(){
     }
 }
 
-function Squark(x, y){
+function getNeighbor(n){
+    var neighbors = [];
+    var N = squarks[n-1];
+    var E = squarks[n+8];
+    var S = squarks[n+1];
+    var W = squarks[n-8];
+    return [N, S, E, W];
+}
+
+function Squark(x, y, n){
+    this.index = n;
     this.x = x;
     this.y = y;
     this.color = getRandomColor();
@@ -59,11 +76,9 @@ function Squark(x, y){
 
     this.clickedOn = function() {
         if(mouseX > this.x && mouseX < this.x + 50 && mouseY > this.y && mouseY < this.y + 50){
-            this.color = getRandomColor();
+            this.color = getRandomColor(this.color);
+            console.log(this);
+            console.log(getNeighbor(this.index));
         }
     }
 }
-
-
-
-
