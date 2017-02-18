@@ -1,15 +1,17 @@
 var cols = 8;
 var rows = 8;
 
+var squarks = [];
+
 /* Color definitions */
-var red = [255, 0, 0]
-var blu = [0, 0, 255]
-var grn = [0, 255, 0]
-var ylw = [255, 190, 0]
-var prp = [180, 0, 200]
+var a = [153, 184, 152]
+var b = [254, 206, 168]
+var c = [255, 132, 124]
+var d = [232, 74, 95]
+var e = [42, 54, 59]
 
 /* Array representing available colors */
-var availableColors = [red, blu, grn, ylw, prp]
+var availableColors = [a, b, c, d, e]
 
 /* Get a random color from colors */
 function getRandomColor() {
@@ -17,39 +19,49 @@ function getRandomColor() {
 };
 
 colors = [];
+position = [];
 
 function setup(){
     createCanvas(401, 401);
     colorMode(RGB)
-    for (var i = 0; i < cols; i++){
-        colors[i] = []
-        for (var j = 0; j < rows; j++){
-            colors[i][j] = (getRandomColor());
+        for (var i = 0; i < 8; i++){
+            for (var j = 0; j < 8; j++){
+                var x = i*50;
+                var y = j*50;
+                squarks.push(new Squark(x, y));
+            }
         }
-    }
 }
 
 function draw(){
     background(30);
 
-    for (var i = 0; i < cols; i++){
-        for (var j = 0; j < rows; j++) {
-            var x = i * 50;
-            var y = j * 50;
-            fill(colors[i][j])
-            stroke(0);
-            rect(x, y, 50, 50);
-        }
+    for (var i = 0; i < squarks.length; i++){
+        squarks[i].display();
     }
 }
 
 function mousePressed(){
-    for (var i = 0; i < cols; i++){
-        colors[i] = []
-        for (var j = 0; j < rows; j++){
-            colors[i][j] = (getRandomColor());
-        }
+    for (var i = 0; i < squarks.length; i++){
+        squarks[i].clickedOn();
     }
 }
+
+function Squark(x, y){
+    this.x = x;
+    this.y = y;
+    this.color = getRandomColor();
+
+    this.display = function() {
+        fill(this.color);
+        rect(this.x, this.y, 50, 50)
+    }
+
+    this.clickedOn = function() {
+        this.color = getRandomColor();
+    }
+}
+
+
 
 
