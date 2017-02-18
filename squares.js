@@ -58,7 +58,9 @@ function Squark(x, y){
     }
 
     this.clickedOn = function() {
-        this.color = getRandomColor();
+        if(mouseX > this.x && mouseX < this.x + 50 && mouseY > this.y && mouseY < this.y + 50){
+            this.color = getRandomColor();
+        }
     }
 }
 
