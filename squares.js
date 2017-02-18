@@ -1,7 +1,22 @@
 var cols = 8;
 var rows = 8;
 
-var colors = [];
+/* Color definitions */
+var red = [255, 0, 0]
+var blu = [0, 0, 255]
+var grn = [0, 255, 0]
+var ylw = [255, 190, 0]
+var prp = [180, 0, 200]
+
+/* Array representing available colors */
+var availableColors = [red, blu, grn, ylw, prp]
+
+/* Get a random color from colors */
+function getRandomColor() {
+        return availableColors[Math.floor(Math.random() * availableColors.length)];
+};
+
+colors = [];
 
 function setup(){
     createCanvas(401, 401);
@@ -9,16 +24,7 @@ function setup(){
     for (var i = 0; i < cols; i++){
         colors[i] = []
         for (var j = 0; j < rows; j++){
-            colors[i][j] = floor(random(255));
-        }
-    }
-}
-
-function mousePressed(){
-    for (var i = 0; i < cols; i++){
-        colors[i] = []
-        for (var j = 0; j < rows; j++){
-            colors[i][j] = floor(random(255));
+            colors[i][j] = (getRandomColor());
         }
     }
 }
@@ -36,4 +42,14 @@ function draw(){
         }
     }
 }
+
+function mousePressed(){
+    for (var i = 0; i < cols; i++){
+        colors[i] = []
+        for (var j = 0; j < rows; j++){
+            colors[i][j] = (getRandomColor());
+        }
+    }
+}
+
 
