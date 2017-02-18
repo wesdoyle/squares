@@ -1,5 +1,6 @@
-var cols = 8;
-var rows = 8;
+var cols = 24;
+var rows = 24;
+var sq_size = 34;
 
 var squarks = [];
 
@@ -28,12 +29,12 @@ function getRandomColor(x) {
 
 function setup(){
     var n = 0
-    createCanvas(401, 401);
+    createCanvas(cols*sq_size+1, rows*sq_size+1);
     colorMode(RGB)
-        for (var i = 0; i < 8; i++){
-            for (var j = 0; j < 8; j++){
-                var x = i*50;
-                var y = j*50;
+        for (var i = 0; i < cols; i++){
+            for (var j = 0; j < rows; j++){
+                var x = i*sq_size;
+                var y = j*sq_size;
                 squarks.push(new Squark(x, y, n));
                 n = n + 1;
             }
@@ -56,9 +57,9 @@ function mousePressed(){
 
 function getNeighbors(n){
     var N = squarks[n-1];
-    var E = squarks[n+8];
+    var E = squarks[n+cols];
     var S = squarks[n+1];
-    var W = squarks[n-8];
+    var W = squarks[n-rows];
     var neighbors = [N, E, S, W];
     return neighbors;
 }
@@ -71,11 +72,11 @@ function Squark(x, y, n){
 
     this.display = function() {
         fill(this.color);
-        rect(this.x, this.y, 50, 50)
+        rect(this.x, this.y, sq_size, sq_size)
     }
 
     this.clickedOn = function() {
-        if(mouseX > this.x && mouseX < this.x + 50 && mouseY > this.y && mouseY < this.y + 50){
+        if(mouseX > this.x && mouseX < this.x + sq_size && mouseY > this.y && mouseY < this.y + sq_size){
 
             newColor = [0, 0, 0];
 
