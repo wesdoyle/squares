@@ -90,7 +90,7 @@ function getColSquarks(n){
 
 function evaluate(){
     erows = [];
-    for(i=0; i<rows; i++){
+    for(i=0; i<=rows; i++){
         rowColors = []
         sqs = getRowSquarks(i);
         sqs.forEach(function(s){
@@ -98,6 +98,12 @@ function evaluate(){
         })
         console.log(rowColors);
         erows.push(rowColors);
+        if (allSame(rowColors)){
+            console.log("Goal!!!")
+        }
+        else{
+            console.log("Not Yet...")
+        }
     }
     console.log("colors: ");
     console.log(erows);
