@@ -1,6 +1,6 @@
-var cols = 24;
-var rows = 24;
-var sq_size = 34;
+var cols = 5;
+var rows = 5;
+var sq_size = 64;
 
 var squarks = [];
 
@@ -55,6 +55,15 @@ function mousePressed(){
     }
 }
 
+Array.prototype.allValuesSame = function(){
+    for(var i = 1; i < this.length; i++){
+        if(this[i] !== this[0])
+            return false;
+    }
+}
+
+function checkRows(){}
+
 function getNeighbors(n){
     var N = squarks[n-1];
     var E = squarks[n+cols];
@@ -64,10 +73,44 @@ function getNeighbors(n){
     return neighbors;
 }
 
+function getRowSquarks(n){
+    target = squarks[n];
+    rowArray = [];
+
+    squarks.forEach(function(sq){
+        if(sq.row_num == target.row_num){
+            rowArray.push(sq);
+        }
+    });
+
+    console.log("Evaluated rows");
+    console.log(rowArray);
+}
+
+
+
+function getColSquarks(n){
+    target = squarks[n];
+    colArray = [];
+
+    squarks.forEach(function(sq){
+        if(sq.col_num == target.col_num){
+            colArray.push(sq);
+        }
+    });
+
+    console.log("Evaluated columns");
+    console.log(colArray);
+}
+
+
+
 function Squark(x, y, n){
     this.index = n;
     this.x = x;
     this.y = y;
+    this.row_num = floor(1 + this.y/sq_size);
+    this.col_num = floor(1 + this.x/sq_size);
     this.color = getRandomColor();
 
     this.display = function() {
@@ -77,6 +120,9 @@ function Squark(x, y, n){
 
     this.clickedOn = function() {
         if(mouseX > this.x && mouseX < this.x + sq_size && mouseY > this.y && mouseY < this.y + sq_size){
+            console.log(this.index)
+            console.log("row number: " + this.row_num)
+            console.log("column number: " + this.col_num)
 
             newColor = [0, 0, 0];
 
@@ -107,14 +153,15 @@ function Squark(x, y, n){
             var S = neighbors[2];
             var W = neighbors[3];
 
-            N.color = newColor;
-            E.color = newColor;
-            S.color = newColor;
-            W.color = newColor;
+            N != null ? N.color = newColor : null;
+            E != null ? E.color = newColor : null;
+            S != null ? S.color = newColor : null;
+            W != null ? W.color = newColor : null;
 
             this.color = newColor;
 
-            console.log(this.index)
+            getRowSquarks(this.index);
+            getColSquarks(this.index);
         }
     }
 }
