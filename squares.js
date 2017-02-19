@@ -2,6 +2,7 @@ var cols = 8;
 var rows = 8;
 var sq_size = 50;
 
+
 var squarks = [];
 
 /* Color definitions */
@@ -17,13 +18,15 @@ var g = {value : [255, 255, 255], name: "white"}
 var availableColors = [a.value, b.value, c.value, d.value, e.value]
 
 colors = [];
-position = [];
+// position = [];
+
+var rowsCleared = 0
 
 Array.prototype.allValuesSame = function() {
 
     for(var i = 1; i < this.length; i++)
     {
-        if(this[i] !== this[0])
+        if(this[i] !== this[0] || this[i].color == f.value)
             return false;
     }
 
@@ -108,7 +111,8 @@ function evaluate(){
         sqs.forEach(function(s){
             rowColors.push(s.colorName);
         })
-        if (rowColors.allValuesSame()){
+
+        if (rowColors.allValuesSame() && rowColors[0]){
             clearRow(i);
         }
     }
@@ -125,8 +129,6 @@ function evaluate(){
         }
     }
 }
-
-rowsCleared = 0
 
 function clearRow(i){
     rownum = i;

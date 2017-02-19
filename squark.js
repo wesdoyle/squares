@@ -56,13 +56,9 @@ function Squark(x, y, n){
             }
 
             if (this.color == f.value){
-                newColor = getRandomColor();
-                newColorName = getColorName(newColor);
             }
 
             if (this.color == g.value){
-                newColor = getRandomColor();
-                newColorName = getColorName(newColor);
             }
 
             this.neighbors = getNeighbors(this.index);
