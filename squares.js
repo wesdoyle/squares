@@ -5,14 +5,14 @@ var sq_size = 64;
 var squarks = [];
 
 /* Color definitions */
-var a = [153, 184, 152]
-var b = [254, 206, 168]
-var c = [255, 132, 124]
-var d = [232, 74, 95]
-var e = [42, 54, 59]
+var a = {value : [255, 0, 0], name : "red"}
+var b = {value : [0, 255, 0], name : "green"}
+var c = {value : [0, 0, 255], name : "blue"}
+var d = {value : [30, 30, 30], name : "black"}
+var e = {value : [215, 215, 215], name : "white"}
 
 /* Array representing available colors */
-var availableColors = [a, b, c, d, e]
+var availableColors = [a.value, b.value, c.value, d.value, e.value]
 
 colors = [];
 position = [];
@@ -89,20 +89,19 @@ function getColSquarks(n){
 }
 
 function evaluate(){
-    // check if any rows or columns contain
-    // same color for all elements
-    for(i=1; i<rows; i++){
+    erows = [];
+    for(i=0; i<rows; i++){
+        rowColors = []
+        sqs = getRowSquarks(i);
+        sqs.forEach(function(s){
+            rowColors.push(s.colorName);
+        })
+        console.log(rowColors);
+        erows.push(rowColors);
     }
-
-    for(i=1; i<cols; i++){
-    }
+    console.log("colors: ");
+    console.log(erows);
 }
-
-// function flatten(arr) {
-//     return arr.reduce(function (flat, toFlatten) {
-//         return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
-//     }, []);
-// }
 
 function allSame(a){
     var x = a[0];
@@ -114,6 +113,24 @@ function allSame(a){
     }
 }
 
+function getColorName(color){
+            if (color == a.value){
+                return colorName = a.name;
+            }
+            if (color == b.value){
+                return colorName = b.name;
+            }
+            if (color == c.value){
+                return colorName = c.name;
+            }
+            if (color == d.value){
+                return colorName = d.name;
+            }
+            if (color == e.value){
+                return colorName = e.name;
+            }
+}
+
 function Squark(x, y, n){
     this.index = n;
     this.x = x;
@@ -121,6 +138,7 @@ function Squark(x, y, n){
     this.row_num = floor(1 + this.y/sq_size);
     this.col_num = floor(1 + this.x/sq_size);
     this.color = getRandomColor();
+    this.colorName = getColorName(this.color);
 
     this.display = function() {
         fill(this.color);
@@ -129,30 +147,33 @@ function Squark(x, y, n){
 
     this.clickedOn = function() {
         if(mouseX > this.x && mouseX < this.x + sq_size && mouseY > this.y && mouseY < this.y + sq_size){
-            // console.log(this.index)
-            // console.log("row number: " + this.row_num)
-            // console.log("column number: " + this.col_num)
 
-            newColor = [0, 0, 0];
+            newColor = [];
+            newColorName = "";
 
-            if (this.color == a){
-                var newColor = b;
+            if (this.color == a.value){
+                newColor = b.value;
+                newColorName = b.name
             }
 
-            if (this.color == b){
-                var newColor = c;
+            if (this.color == b.value){
+                newColor = c.value;
+                newColorName = c.name
             }
 
-            if (this.color == c){
-                var newColor = d;
+            if (this.color == c.value){
+                newColor = d.value;
+                newColorName = d.name
             }
 
-            if (this.color == d){
-                var newColor = e;
+            if (this.color == d.value){
+                newColor = e.value;
+                newColorName = e.name
             }
 
-            if (this.color == e){
-                var newColor = a;
+            if (this.color == e.value){
+                newColor = a.value;
+                newColorName = a.name
             }
 
             var neighbors = getNeighbors(this.index);
@@ -163,11 +184,19 @@ function Squark(x, y, n){
             var W = neighbors[3];
 
             N != null ? N.color = newColor : null;
+            N != null ? N.colorName = newColorName : null;
+
             E != null ? E.color = newColor : null;
+            E != null ? E.colorName = newColorName : null;
+
             S != null ? S.color = newColor : null;
+            S != null ? S.colorName = newColorName : null;
+
             W != null ? W.color = newColor : null;
+            W != null ? W.colorName = newColorName : null;
 
             this.color = newColor;
+            this.colorName = newColorName;
 
             evaluate();
         }
