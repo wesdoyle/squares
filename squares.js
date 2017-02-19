@@ -1,21 +1,34 @@
-var cols = 5;
-var rows = 5;
-var sq_size = 64;
+var cols = 8;
+var rows = 8;
+var sq_size = 50;
 
 var squarks = [];
 
 /* Color definitions */
-var a = {value : [255, 0, 0], name : "red"}
-var b = {value : [0, 255, 0], name : "green"}
-var c = {value : [0, 0, 255], name : "blue"}
-var d = {value : [30, 30, 30], name : "black"}
-var e = {value : [215, 215, 215], name : "white"}
+var a = {value : [252, 232, 121], name : "light-yellow"}
+var b = {value : [36, 201, 99], name : "green"}
+var c = {value : [237, 40, 20], name : "red"}
+var d = {value : [3, 60, 190], name : "blue"}
+var e = {value : [86, 2, 88], name : "purple"}
+var f = {value : [0, 0, 0], name: "black"}
+var g = {value : [255, 255, 255], name: "white"}
 
 /* Array representing available colors */
 var availableColors = [a.value, b.value, c.value, d.value, e.value]
 
 colors = [];
 position = [];
+
+Array.prototype.allValuesSame = function() {
+
+    for(var i = 1; i < this.length; i++)
+    {
+        if(this[i] !== this[0])
+            return false;
+    }
+
+    return true;
+}
 
 /* Get a random color from colors */
 function getRandomColor(x) {
@@ -89,34 +102,42 @@ function getColSquarks(n){
 }
 
 function evaluate(){
-    erows = [];
-    for(i=0; i<=rows; i++){
-        rowColors = []
+    for(i=0; i < rows; i++){
+        rowColors = [];
         sqs = getRowSquarks(i);
         sqs.forEach(function(s){
             rowColors.push(s.colorName);
         })
-        console.log(rowColors);
-        erows.push(rowColors);
-        if (allSame(rowColors)){
-            console.log("Goal!!!")
-        }
-        else{
-            console.log("Not Yet...")
+        if (rowColors.allValuesSame()){
+            clearRow(i);
         }
     }
-    console.log("colors: ");
-    console.log(erows);
+
+    for(i=0; i < squarks.length; i=i+cols){
+        colColors = [];
+        sqs = getColSquarks(i);
+        sqs.forEach(function(s){
+            colColors.push(s.colorName);
+        })
+
+        if (colColors.allValuesSame()){
+            clearCol(i);
+        }
+    }
 }
 
-function allSame(a){
-    var x = a[0];
-    for(var i=1; i<a.length; i++){
-        if(x!=a[i]){
-            return false;
-        }
-        return true;
-    }
+function clearRow(i){
+    rowSquarks = getRowSquarks(i);
+    rowSquarks.forEach(function(sq){
+        sq.color = g.value;
+    })
+}
+
+function clearCol(i){
+    colSquarks = getColSquarks(i);
+    colSquarks.forEach(function(sq){
+        sq.color = f.value;
+    })
 }
 
 function getColorName(color){
@@ -134,6 +155,12 @@ function getColorName(color){
             }
             if (color == e.value){
                 return colorName = e.name;
+            }
+            if (color == f.value){
+                return colorName = f.name;
+            }
+            if (color == g.value){
+                return colorName = g.name;
             }
 }
 
@@ -154,8 +181,8 @@ function Squark(x, y, n){
     this.clickedOn = function() {
         if(mouseX > this.x && mouseX < this.x + sq_size && mouseY > this.y && mouseY < this.y + sq_size){
 
-            newColor = [];
-            newColorName = "";
+            newColor = this.color;
+            newColorName = this.colorName;
 
             if (this.color == a.value){
                 newColor = b.value;
@@ -182,6 +209,16 @@ function Squark(x, y, n){
                 newColorName = a.name
             }
 
+            if (this.color == f.value){
+                newColor = getRandomColor();
+                newColorName = getColorName(newColor);
+            }
+
+            if (this.color == g.value){
+                newColor = getRandomColor();
+                newColorName = getColorName(newColor);
+            }
+
             var neighbors = getNeighbors(this.index);
 
             var N = neighbors[0];
@@ -202,6 +239,7 @@ function Squark(x, y, n){
             W != null ? W.colorName = newColorName : null;
 
             this.color = newColor;
+            console.log(this.color)
             this.colorName = newColorName;
 
             evaluate();

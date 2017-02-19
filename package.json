@@ -1,0 +1,19 @@
+{
+  "name": "squares",
+  "version": "1.0.0",
+  "description": "a puzzle game implemented in javascript using p5.js",
+  "main": "squares.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wesdoyle/squares.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wesdoyle/squares/issues"
+  },
+  "homepage": "https://github.com/wesdoyle/squares#readme"
+}
