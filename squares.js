@@ -19,17 +19,17 @@ position = [];
 
 /* Get a random color from colors */
 function getRandomColor(x) {
-        var newColor = availableColors[Math.floor(Math.random()
-                * availableColors.length)];
-        if (newColor == x) {
-            getRandomColor(x);
-        }
-        return newColor;
+    var newColor = availableColors[Math.floor(Math.random()
+            * availableColors.length)];
+    if (newColor == x) {
+        getRandomColor(x);
+    }
+    return newColor;
 };
 
 function setup(){
     var n = 0
-    createCanvas(cols*sq_size+1, rows*sq_size+1);
+        createCanvas(cols*sq_size+1, rows*sq_size+1);
     colorMode(RGB)
         for (var i = 0; i < cols; i++){
             for (var j = 0; j < rows; j++){
@@ -55,15 +55,6 @@ function mousePressed(){
     }
 }
 
-Array.prototype.allValuesSame = function(){
-    for(var i = 1; i < this.length; i++){
-        if(this[i] !== this[0])
-            return false;
-    }
-}
-
-function checkRows(){}
-
 function getNeighbors(n){
     var N = squarks[n-1];
     var E = squarks[n+cols];
@@ -82,12 +73,8 @@ function getRowSquarks(n){
             rowArray.push(sq);
         }
     });
-
-    console.log("Evaluated rows");
-    console.log(rowArray);
+    return rowArray;
 }
-
-
 
 function getColSquarks(n){
     target = squarks[n];
@@ -98,12 +85,34 @@ function getColSquarks(n){
             colArray.push(sq);
         }
     });
-
-    console.log("Evaluated columns");
-    console.log(colArray);
+    return colArray;
 }
 
+function evaluate(){
+    // check if any rows or columns contain
+    // same color for all elements
+    for(i=1; i<rows; i++){
+    }
 
+    for(i=1; i<cols; i++){
+    }
+}
+
+// function flatten(arr) {
+//     return arr.reduce(function (flat, toFlatten) {
+//         return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
+//     }, []);
+// }
+
+function allSame(a){
+    var x = a[0];
+    for(var i=1; i<a.length; i++){
+        if(x!=a[i]){
+            return false;
+        }
+        return true;
+    }
+}
 
 function Squark(x, y, n){
     this.index = n;
@@ -120,9 +129,9 @@ function Squark(x, y, n){
 
     this.clickedOn = function() {
         if(mouseX > this.x && mouseX < this.x + sq_size && mouseY > this.y && mouseY < this.y + sq_size){
-            console.log(this.index)
-            console.log("row number: " + this.row_num)
-            console.log("column number: " + this.col_num)
+            // console.log(this.index)
+            // console.log("row number: " + this.row_num)
+            // console.log("column number: " + this.col_num)
 
             newColor = [0, 0, 0];
 
@@ -160,8 +169,7 @@ function Squark(x, y, n){
 
             this.color = newColor;
 
-            getRowSquarks(this.index);
-            getColSquarks(this.index);
+            evaluate();
         }
     }
 }
